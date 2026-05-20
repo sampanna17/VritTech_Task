@@ -4,6 +4,7 @@ import reactImg from "../assets/Task2/react.png";
 import socialImg from "../assets/Task2/social.png";
 import vueImg from "../assets/Task2/vue.png";
 import designImg from "../assets/Task2/design.png";
+import clickMeImg from "../assets/Task2/clickme.png";
 
 const TechIconRow = ({ icons }) => {
     return (
@@ -38,7 +39,7 @@ const MainAllCoursesCard = ({ icons }) => {
     return (
         <div className="relative bg-[#C92E40] rounded-[36px] p-10 min-h-[530px] text-white shadow-lg overflow-hidden group cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
             {/* Top Right Link */}
-            <button className="absolute top-10 right-10 flex items-center gap-3 text-[20px] font-semibold">
+            <button className="absolute top-10 right-10 flex items-center gap-3 text-[20px] font-semibold hover:[&>svg]:animate-[nudge-x_1000ms_ease-in-out_infinite]">
                 View all Courses
                 <ArrowRight size={24} />
             </button>
@@ -72,25 +73,34 @@ const MainAllCoursesCard = ({ icons }) => {
 
 const SideCoursesCard = ({ title, description, number }) => {
     return (
-        <div className="relative bg-[#F4E9EA] rounded-[36px] min-h-[530px] p-8 overflow-hidden shadow-md group cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-xl">
-            {/* Vertical Text */}
-            <div className="absolute top-30 left-1/2 -translate-x-1/2 rotate-[-90deg] origin-center flex flex-col items-center gap-6 text-[#C92E40]">
-                <h3 className="font-['Outfit'] text-[32px] font-bold leading-[100%]">
-                    {title}
-                </h3>
-
-                <p className="font-['Outfit'] text-[18px] font-normal leading-[100%]">
-                    {description}
+        <div className="relative group">
+            <div className="pointer-events-none absolute z-50 left-1/2 -top-10 -translate-x-1/2 flex flex-col items-center opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100">
+                <p className=" text-[14px] font-medium text-[#2D2D2D]">
+                    Click me!
                 </p>
+                <img src={clickMeImg} alt="Click me" className="w-[50px]" />
             </div>
 
-            {/* Number */}
-            <div className="absolute bottom-8 left-8 text-[#C92E40]">
-                <NumberWithPlus
-                    value={number}
-                    numberClassName="block text-[180px] font-bold leading-none tracking-tight"
-                    plusClassName="absolute right-[-46px] top-[8px] text-[64px] font-bold leading-none"
-                />
+            <div className="relative bg-[#F4E9EA] rounded-[36px] min-h-[530px] p-8 overflow-hidden shadow-md cursor-pointer transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-xl">
+                {/* Vertical Text */}
+                <div className="absolute top-30 left-1/2 -translate-x-1/2 rotate-[-90deg] origin-center flex flex-col items-center gap-6 text-[#C92E40]">
+                    <h3 className="font-['Outfit'] text-[32px] font-bold leading-[100%]">
+                        {title}
+                    </h3>
+
+                    <p className="font-['Outfit'] text-[18px] font-normal leading-[100%]">
+                        {description}
+                    </p>
+                </div>
+
+                {/* Number */}
+                <div className="absolute bottom-8 left-8 text-[#C92E40]">
+                    <NumberWithPlus
+                        value={number}
+                        numberClassName="block text-[180px] font-bold leading-none tracking-tight"
+                        plusClassName="absolute right-[-46px] top-[8px] text-[64px] font-bold leading-none"
+                    />
+                </div>
             </div>
         </div>
     );
