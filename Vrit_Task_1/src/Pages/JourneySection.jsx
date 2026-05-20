@@ -1,7 +1,7 @@
-import clarityImg from "../assets/clarity.png";
-import learnImg from "../assets/learn.png";
-import mentorImg from "../assets/mentor.png";
-import achieveImg from "../assets/achieve.png";
+import clarityImg from "../assets/Task1/clarity.png";
+import learnImg from "../assets/Task1/learn.png";
+import mentorImg from "../assets/Task1/mentor.png";
+import achieveImg from "../assets/Task1/achieve.png";
 
 const cards = [
   {
@@ -75,7 +75,7 @@ const JourneyCard = ({
             {subtitle}
           </h4>
 
-          <p className="mt-8 w-full max-w-[390px] font-['Outfit'] text-[18px] font-normal leading-[100%] tracking-[0]">
+          <p className="mt-8 w-full max-w-[360px] font-['Outfit'] text-[18px] font-extralight  tracking-[0]">
             {desc}
           </p>
         </div>
@@ -94,6 +94,12 @@ const JourneyCard = ({
 };
 
 const JourneySection = () => {
+  const handleTask2Click = () => {
+    document
+      .getElementById("task-2")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <section className="bg-[#f3f3f3] min-h-screen py-16 px-6">
       <div className="max-w-7xl mx-auto">
@@ -103,16 +109,26 @@ const JourneySection = () => {
         </p>
 
         {/* Heading */}
-        <div className="mt-12">
-          <p className="font-['Outfit'] font-medium text-[24px] leading-[100%] tracking-[0] text-[#444]">
-            Your SkillShikshya Journey
-          </p>
+        <div className="mt-12 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="font-['Outfit'] font-medium text-[24px] leading-[100%] tracking-[0] text-[#444]">
+              Your SkillShikshya Journey
+            </p>
 
-          <h1 className="mt-3 font-['Nohemi'] text-[32px] font-bold leading-[120%] tracking-[0]">
-            <span className="text-[#22A06B]">Step</span> In.{" "}
-            <span className="text-[#22A06B]">Skill</span> Up.{" "}
-            <span className="text-[#22A06B]">Stand</span> Out. 🚀
-          </h1>
+            <h1 className="mt-3 font-['Nohemi'] text-[32px] font-bold leading-[120%] tracking-[0]">
+              <span className="text-[#22A06B]">Step</span> In.{" "}
+              <span className="text-[#22A06B]">Skill</span> Up.{" "}
+              <span className="text-[#22A06B]">Stand</span> Out. 🚀
+            </h1>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleTask2Click}
+            className="self-end sm:self-start shrink-0 rounded-full border border-[#22A06B] px-6 py-2 font-['Outfit'] text-[16px] font-medium leading-[100%] tracking-[0] text-[#22A06B]"
+          >
+            Task 2
+          </button>
         </div>
 
         {/* Cards */}
