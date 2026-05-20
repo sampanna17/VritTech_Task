@@ -12,7 +12,7 @@ const cards = [
     we have a path tailored to your growth.`,
     bg: "#F45C5C",
     image: clarityImg,
-    imageClass: "-left-10 top-10 w-[257.3858337402344px] h-[338.593994140625px] z-50 ",
+    imageClass: "-left-16 top-10 w-[280px] h-[360px] z-50 ",
     contentClass: "items-end text-right pl-52 pr-10",
   },
   {
@@ -22,7 +22,7 @@ const cards = [
     Hands-on projects and real-world scenarios help you build, break, and create—leading to true mastery.`,
     bg: "#5D97A6",
     image: learnImg,
-    imageClass: "right-0 -bottom-10 w-[200px] h-[360px]",
+    imageClass: "right-0 -bottom-20 w-[220px] h-[380px]",
     contentClass: "items-start text-left pr-52 pl-10",
   },
   {
@@ -32,7 +32,7 @@ const cards = [
     with live support, interactive discussions, and expert insights. You’re never on your own.`,
     bg: "#7569B5",
     image: mentorImg,
-    imageClass: "-left-10 top-34  w-[307.03753662109375px] h-[249.9674835205078px]",
+    imageClass: "-left-16 top-24  w-[320px] h-[300px]",
     contentClass: "items-end text-right pl-52 pr-10",
   },
   {
@@ -42,7 +42,7 @@ const cards = [
     bringing you closer to that dream job, promotion, or your own venture.`,
     bg: "#B6966D",
     image: achieveImg,
-    imageClass: "-right-8 -bottom-10 w-[280.0356889119445px] h-[310.76718089642645px]",
+    imageClass: "-right-8 -bottom-26 w-[340px] h-[380px]",
     contentClass: "items-start text-left pr-52 pl-10",
   },
 ];
@@ -60,38 +60,34 @@ const JourneyCard = ({
     <div className="relative">
       {/* Main Card */}
       <div
-        className="group relative overflow-visible rounded-[32px] h-[325px]
-                   shadow-md transition-all duration-500
-                   hover:-translate-y-2 hover:shadow-2xl cursor-pointer"
+        className="relative overflow-visible rounded-[32px] h-[325px] shadow-md"
         style={{ backgroundColor: bg }}
       >
         {/* Content */}
         <div
           className={`relative z-10 flex flex-col pt-14 text-white ${contentClass}`}
         >
-          <h2 className="text-[24px] md:text-[28px] font-bold leading-tight">
+          <h2 className="w-full text-[28px] font-bold leading-[120%] tracking-[0]">
             {title}
           </h2>
 
-          <h4 className="mt-3 text-[18px] md:text-[20px] font-semibold">
+          <h4 className="mt-3 w-full font-['Outfit'] font-medium text-[20px] leading-[100%] tracking-[0]">
             {subtitle}
           </h4>
 
-          <p className="mt-8 text-[15px] leading-8 max-w-[390px] font-medium">
+          <p className="mt-8 w-full max-w-[390px] font-['Outfit'] text-[18px] font-normal leading-[100%] tracking-[0]">
             {desc}
           </p>
         </div>
 
         {/* Glow Effect */}
-        <div className="absolute inset-0 rounded-[32px] opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-br from-white/10 to-transparent" />
+        <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-white/10 to-transparent" />
       </div>
 
       <img
         src={image}
         alt={title}
-        className={`absolute z-20 transition-transform duration-500
-                    group-hover:scale-105 group-hover:-translate-y-2
-                    ${imageClass}`}
+        className={`absolute z-20 animate-float-y ${imageClass}`}
       />
     </div>
   );
@@ -102,17 +98,17 @@ const JourneySection = () => {
     <section className="bg-[#f3f3f3] min-h-screen py-16 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Top Note */}
-        <p className="text-center text-[18px] md:text-[22px] font-medium text-[#2b2b2b]">
+        <p className="text-center font-[Fustat] font-medium text-[32px] leading-[100%] tracking-[0] text-[#2b2b2b]">
           Note: Hover the component to view the animation & Click the arrow icon
         </p>
 
         {/* Heading */}
         <div className="mt-12">
-          <p className="text-[18px] font-semibold text-[#444]">
+          <p className="font-['Outfit'] font-medium text-[24px] leading-[100%] tracking-[0] text-[#444]">
             Your SkillShikshya Journey
           </p>
 
-          <h1 className="mt-3 text-[36px] md:text-[48px] font-bold leading-tight">
+          <h1 className="mt-3 font-['Nohemi'] text-[32px] font-bold leading-[120%] tracking-[0]">
             <span className="text-[#22A06B]">Step</span> In.{" "}
             <span className="text-[#22A06B]">Skill</span> Up.{" "}
             <span className="text-[#22A06B]">Stand</span> Out. 🚀
