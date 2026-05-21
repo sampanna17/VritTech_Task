@@ -96,18 +96,69 @@ const GRID_COLS_BY_ACTIVE = {
     ongoing: "lg:grid-cols-[1fr_1fr_2.2fr]",
 };
 
-const TechIconRow = memo(({ icons }) => {
+const CARD_INDEX = {
+    all: 0,
+    upcoming: 1,
+    ongoing: 2,
+};
+
+const iconRowVariants = {
+    hidden: {
+        opacity: 0,
+    },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.08,
+            delayChildren: 0.05,
+        },
+    },
+};
+
+const iconItemVariants = {
+    hidden: (directionX) => ({
+        opacity: 0,
+        x: directionX,
+        y: 6,
+        rotate: -2,
+        filter: "blur(2px)",
+    }),
+    show: {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        rotate: 0,
+        filter: "blur(0px)",
+        transition: {
+            duration: 0.45,
+            ease: "easeOut",
+        },
+    },
+};
+
+const TechIconRow = memo(({ icons, direction = "none" }) => {
+    const directionX = direction === "left" ? -34 : direction === "right" ? 34 : 0;
+
     return (
-        <div className="flex items-center justify-center gap-10 mt-24">
+        <motion.div
+            layout
+            layoutId="tech-icon-row"
+            variants={iconRowVariants}
+            initial="hidden"
+            animate="show"
+            className="flex items-center justify-center gap-10 mt-24"
+        >
             {icons.map((icon) => (
-                <img
+                <motion.img
                     key={icon.alt}
                     src={icon.src}
                     alt={icon.alt}
                     className={icon.className}
+                    custom={directionX}
+                    variants={iconItemVariants}
                 />
             ))}
-        </div>
+        </motion.div>
     );
 });
 
@@ -126,13 +177,14 @@ const NumberWithPlus = memo(({
 });
 
 const MainCoursesCard = memo(
-    ({ cardId, icons, title, description, number, onActivate }) => {
+    ({ cardId, icons, title, description, number, onActivate, iconSwapDirection }) => {
+
     return (
         <motion.div
             layout
             layoutId={`card-${cardId}`}
             onClick={() => onActivate(cardId)}
-            className="relative bg-[#C92E40] rounded-[36px] p-10 min-h-[530px] text-white shadow-lg overflow-hidden group cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+            className="relative bg-[#C92E40] rounded-[36px] p-10 min-h-[530px] text-white shadow-lg overflow-hidden group cursor-pointer transition-[transform,box-shadow] duration-500 hover:-translate-y-2 hover:shadow-2xl"
         >
             {/* Top Right Link */}
             <button
@@ -145,7 +197,7 @@ const MainCoursesCard = memo(
             </button>
 
             {/* Technology Icons */}
-            <TechIconRow icons={icons} />
+            <TechIconRow icons={icons} direction={iconSwapDirection} />
 
             {/* Bottom Stats */}
             <div className="absolute bottom-10 inset-x-0 flex items-center justify-center gap-8 px-10">
@@ -195,13 +247,13 @@ const SideCoursesCard = memo(
             }}
         >
             <div className="pointer-events-none absolute z-50 left-1/2 -top-10 -translate-x-1/2 flex flex-col items-center opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100">
-                <p className=" text-[14px] font-medium text-[#2D2D2D]">
+                <p className="text-[14px] font-medium text-[#2D2D2D]">
                     Click me!
                 </p>
                 <img src={clickMeImg} alt="Click me" className="w-[50px]" />
             </div>
 
-            <div className="relative bg-[#F4E9EA] rounded-[36px] min-h-[530px] p-8 overflow-hidden shadow-md cursor-pointer transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-xl">
+            <div className="relative bg-[#F4E9EA] rounded-[36px] min-h-[530px] p-8 overflow-hidden shadow-md cursor-pointer transition-[transform,box-shadow] duration-500 group-hover:-translate-y-2 group-hover:shadow-xl">
                 {/* Vertical Text */}
                 <motion.div
                     layoutId={`card-text-${cardId}`}
@@ -209,7 +261,7 @@ const SideCoursesCard = memo(
                     initial={false}
                     animate={{ rotate: -90 }}
                     style={{ transformOrigin: "100% 50%" }}
-                    className="absolute top-30 left-1/2 -translate-x-1/2 origin-center flex flex-col items-center gap-6 text-[#C92E40]"
+                    className="absolute top-30 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 text-[#C92E40]"
                 >
                     <h3 className="font-['Outfit'] text-[32px] font-bold leading-[100%]">
                         {title}
@@ -236,10 +288,21 @@ const SideCoursesCard = memo(
 
 const TrendingCoursesSection = () => {
     const [activeCard, setActiveCard] = useState("all");
+    const [iconSwapDirection, setIconSwapDirection] = useState("none");
 
     const cards = useMemo(() => CARDS, []);
 
     const active = cards.find((c) => c.id === activeCard) ?? cards[0];
+
+    const activateCard = (nextId) => {
+        const prevIndex = CARD_INDEX[activeCard] ?? 0;
+        const nextIndex = CARD_INDEX[nextId] ?? 0;
+
+        setIconSwapDirection(
+            nextIndex > prevIndex ? "right" : nextIndex < prevIndex ? "left" : "none"
+        );
+        setActiveCard(nextId);
+    };
 
     const gridColsByActive = GRID_COLS_BY_ACTIVE;
 
@@ -269,7 +332,7 @@ const TrendingCoursesSection = () => {
                     <LayoutGroup>
                         <motion.div
                             layout
-                            className={`mt-16 grid grid-cols-1 gap-8 transition-all duration-700 ${gridColsByActive[active.id]}`}
+                            className={`mt-16 grid grid-cols-1 gap-8 transition-[grid-template-columns] duration-700 ${gridColsByActive[active.id]}`}
                         >
                             {cards.map((card) =>
                                 card.id === active.id ? (
@@ -280,7 +343,8 @@ const TrendingCoursesSection = () => {
                                         title={card.mainTitle}
                                         description={card.description}
                                         number={card.number}
-                                        onActivate={setActiveCard}
+                                        onActivate={activateCard}
+                                        iconSwapDirection={iconSwapDirection}
                                     />
                                 ) : (
                                     <SideCoursesCard
@@ -289,7 +353,7 @@ const TrendingCoursesSection = () => {
                                         title={card.sideTitle}
                                         description={card.sideDescription}
                                         number={card.number}
-                                        onActivate={setActiveCard}
+                                        onActivate={activateCard}
                                     />
                                 )
                             )}
